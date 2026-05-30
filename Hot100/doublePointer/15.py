@@ -1,5 +1,5 @@
 from typing import List
-
+#O(N^2) + O(NlogN) -> O(N^2)
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         # Sort the array to enable two-pointer technique
