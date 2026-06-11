@@ -1,21 +1,5 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class Main {
-
-    public static void main(String[] args) {
-        int[][] matrix = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        System.out.println(spiralOrder(matrix));
-          //way 2
-//        int[][] matrix; // Declaration
-//
-//       // Later in your code...
-//        matrix = new int[][] { {1, 4}, {2, 5} }; // Explicit Initialization
-
-    }
-
-    public static List<Integer> spiralOrder(int[][] matrix) {
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> result = new ArrayList<>();
         int row = matrix.length;
         int col = matrix[0].length;
@@ -32,7 +16,7 @@ public class Main {
             for(int row_variable = top + 1; row_variable <= bottom; row_variable++) {
                 result.add(matrix[row_variable][right]);
             }
-            if(left < right && top < bottom) {
+            if(left < right && top < bottom) { //why we need this if statement?
                 for(int col_variable = right - 1; col_variable >= left ; col_variable--) {
                     result.add(matrix[bottom][col_variable]);
                 }
@@ -40,7 +24,7 @@ public class Main {
                     result.add(matrix[row_variable][left]);
                 }
             }
-
+            
 
             left += 1;
             right -= 1;
@@ -51,4 +35,3 @@ public class Main {
         return result;
     }
 }
-
