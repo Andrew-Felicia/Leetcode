@@ -41,16 +41,6 @@ class Solution:
         tmp = result
 
         while list1 != None and list2 != None:
-            # if list1.val <= list2.val:
-            #     tmp.next = list1
-            #     tmp = tmp.next
-            #     list1 = list1.next
-            # else:
-            #     tmp.next = list2
-            #     tmp = tmp.next
-            #     list2 = list2.next
-            
-            #optimize
             if list1.val <= list2.val:
                 tmp.next = list1
                 list1 = list1.next
@@ -58,19 +48,6 @@ class Solution:
                 tmp.next = list2
                 list2 = list2.next
             tmp = tmp.next
-        
-        # Attach remaining nodes. Method 1
-        # if list1 == None:
-        #     while list2 != None:
-        #         tmp.next = list2
-        #         tmp = tmp.next
-        #         list2 = list2.next
-        # if list2 == None:
-        #     while list1 != None:
-        #         tmp.next = list1
-        #         tmp = tmp.next
-        #         list1 = list1.next
-
         # Attach remaining nodes. Method2
         tmp.next = list1 if list1 else list2
 

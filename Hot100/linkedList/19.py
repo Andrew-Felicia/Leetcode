@@ -32,6 +32,9 @@ class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+
+#TC: O(n)
+#SC: O(n)
 class Solution:
     def removeNthFromEnd(self, head, n: int):
         elements = []
@@ -50,3 +53,36 @@ class Solution:
             tmp.next = ListNode(i)
             tmp = tmp.next
         return ans.next
+    
+#TC: O(n)
+#SC: O(1)
+class Solution:
+    def removeNthFromEnd(self, head, n: int):
+        #base case
+        if not head.next and n == 1:
+            return None
+
+        #counts how many nodes.
+        tmp = head
+        counts = 0
+        while tmp:
+            tmp = tmp.next
+            counts += 1
+    
+        #how many nodes before the node which needed to be removed.
+        left = counts - n
+
+        if left == 0: 
+            return head.next
+        
+
+        tmp = head
+        for i in range(0, left - 1):
+            tmp = tmp.next
+        tmp1 = tmp.next.next #the rest of the linked list.
+        tmp.next = tmp1
+
+        return head
+
+      
+        
