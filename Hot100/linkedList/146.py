@@ -189,3 +189,29 @@ class LRUCache:
             new_node = Node(key, value)
             self._add_to_head(new_node)
             self.dic[key] = new_node
+
+
+# def main():
+#     lines = sys.stdin.read().strip().split("\n")
+    
+#     # first line: LRUCache N
+#     first = lines[0].split()
+#     cap = int(first[1])
+#     cache = LRUCache(cap)
+
+#     # process the rest commands
+#     for line in lines[1:]:
+#         parts = line.split()
+#         cmd = parts[0]
+
+#         if cmd == "put":
+#             key = int(parts[1])
+#             value = int(parts[2])
+#             cache.put(key, value)
+
+#         elif cmd == "get":
+#             key = int(parts[1])
+#             print(cache.get(key))
+
+# if __name__ == "__main__":
+#     main()
