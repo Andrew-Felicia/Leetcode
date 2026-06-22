@@ -29,28 +29,42 @@
 #             tmp = tmp.right
 #         return ans.right
 
-from typing import List
+
+# class Solution:
+#     def flatten(self, root: Optional[TreeNode]) -> None:
+#         if not root:
+#             return
+
+#         nodes = []
+#         def preOrderTraversal(node):
+#             if not node:
+#                 return
+#             nodes.append(node)
+#             preOrderTraversal(node.left)
+#             preOrderTraversal(node.right)
+
+#         preOrderTraversal(root)
+
+#         tmp = root
+#         for i in range(len(nodes) - 1):
+#             tmp.left = None
+#             tmp.right = nodes[i + 1]
+#             tmp = tmp.right
+
+#         nodes[-1].left = None
+#         nodes[-1].right = None
+
 
 class Solution:
+    head = None
+
     def flatten(self, root) -> None:
+        #right -> left -> root
+
         if not root:
             return
-
-        nodes = []
-        def preOrderTraversal(node):
-            if not node:
-                return
-            nodes.append(node)
-            preOrderTraversal(node.left)
-            preOrderTraversal(node.right)
-
-        preOrderTraversal(root)
-
-        tmp = root
-        for i in range(len(nodes) - 1):
-            tmp.left = None
-            tmp.right = nodes[i + 1]
-            tmp = tmp.right
-
-        nodes[-1].left = None
-        nodes[-1].right = None
+        self.flatten(root.right)
+        self.flatten(root.left)
+        root.left = None
+        root.right = self.head
+        self.head = root 
