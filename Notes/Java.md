@@ -383,3 +383,286 @@ Arrays.copyOfRange(nums, 1, 3);
 ## 13. divide and conquer(分治)
 
 
+## 14. merge(hashmap)
+
+`Map.merge()` 是 Java 8 引入的一个非常实用的方法，用来：
+
+> **如果 key 不存在，则插入；如果 key 存在，则根据规则更新值。**
+
+---
+
+### 方法签名
+
+```java
+V merge(
+    K key,
+    V value,
+    BiFunction<? super V, ? super V, ? extends V> remappingFunction
+)
+```
+
+参数：
+
+- `key`：要操作的键
+    
+- `value`：当 key 不存在时插入的值
+    
+- `remappingFunction`：当 key 已存在时如何合并旧值和新值
+    
+
+---
+
+### 1. 计数器（最常见）
+
+传统写法：
+
+```java
+if (map.containsKey(word)) {
+    map.put(word, map.get(word) + 1);
+} else {
+    map.put(word, 1);
+}
+```
+
+merge：
+
+```java
+map.merge(word, 1, Integer::sum);
+```
+
+等价于：
+
+```java
+map.merge(word, 1, (oldVal, newVal) -> oldVal + newVal);
+```
+
+---
+
+### 2. 累加
+
+例如：
+
+```java
+Map<String, Integer> sales = new HashMap<>();
+```
+
+第一次：
+
+```java
+sales.merge("apple", 10, Integer::sum);
+```
+
+结果：
+
+```java
+{
+    apple=10
+}
+```
+
+第二次：
+
+```java
+sales.merge("apple", 5, Integer::sum);
+```
+
+结果：
+
+```java
+{
+    apple=15
+}
+```
+
+因为：
+
+```java
+oldValue = 10
+newValue = 5
+
+10 + 5 = 15
+```
+
+---
+
+### 3. 拼接字符串
+
+```java
+Map<Integer, String> map = new HashMap<>();
+
+map.merge(1, "Hello", String::concat);
+map.merge(1, " World", String::concat);
+```
+
+结果：
+
+```java
+{
+    1 = "Hello World"
+}
+```
+
+---
+
+### 4. 合并 List
+
+```java
+Map<String, List<Integer>> map = new HashMap<>();
+
+map.merge(
+    "A",
+    new ArrayList<>(List.of(1)),
+    (oldList, newList) -> {
+        oldList.addAll(newList);
+        return oldList;
+    }
+);
+```
+
+---
+
+### 5. LeetCode 437
+
+前缀和统计：
+
+```java
+prefixCount.merge(currSum, 1, Integer::sum);
+```
+
+相当于：
+
+```java
+prefixCount.put(
+    currSum,
+    prefixCount.getOrDefault(currSum, 0) + 1
+);
+```
+
+回溯：
+
+```java
+prefixCount.merge(currSum, -1, Integer::sum);
+```
+
+例如：
+
+```java
+currSum = 10
+
+{
+    10=3
+}
+```
+
+执行：
+
+```java
+merge(10, -1, Integer::sum)
+```
+
+变成：
+
+```java
+{
+    10=2
+}
+```
+
+---
+
+### 6. merge vs compute
+
+### merge
+
+关注：
+
+```java
+key 已有值 + 新值
+```
+
+例如：
+
+```java
+map.merge(k, 1, Integer::sum);
+```
+
+---
+
+#### compute
+
+关注：
+
+```java
+根据 key 重新计算 value
+```
+
+例如：
+
+```java
+map.compute(k, (key, val) ->
+    val == null ? 1 : val + 1
+);
+```
+
+同样实现计数器。
+
+---
+
+### 7. 一个容易忽略的特性
+
+如果合并函数返回 `null`：
+
+```java
+map.merge(key, value, (oldVal, newVal) -> null);
+```
+
+那么该 key 会被删除：
+
+```java
+map.remove(key);
+```
+
+例如：
+
+```java
+Map<Integer,Integer> map = new HashMap<>();
+
+map.put(1, 10);
+
+map.merge(1, 5, (a,b) -> null);
+```
+
+结果：
+
+```java
+{}
+```
+
+key 被移除。
+
+---
+
+### 记忆口诀
+
+```java
+map.merge(
+    key,
+    defaultValue,
+    (oldVal, newVal) -> mergedValue
+);
+```
+
+含义：
+
+> 没有 key → 放入 defaultValue  
+> 有 key → 用 oldVal 和 newVal 算出新的值
+
+LeetCode 中最常见的三个写法：
+
+```java
+map.merge(key, 1, Integer::sum);      // 计数
+map.merge(key, -1, Integer::sum);     // 减计数
+map.merge(key, value, Math::max);     // 取最大值
+```
+
+如果你已经在刷树和哈希表题（比如 437、560、1248、930），`merge()` 和 `getOrDefault()` 是最值得熟练掌握的两个 `HashMap` API。
