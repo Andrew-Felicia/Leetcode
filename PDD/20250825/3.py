@@ -29,12 +29,8 @@ def minimum_swaps(values, held):
 
 def main():
     numbers = iter(map(int, sys.stdin.buffer.read().split()))
-    test_cases = next(numbers)
-    answers = []
-    for _ in range(test_cases):
-        n, held = next(numbers), next(numbers)
-        answers.append(str(minimum_swaps([next(numbers) for _ in range(n)], held)))
-    print("\n".join(answers))
+    n, held = next(numbers), next(numbers)
+    print(minimum_swaps([next(numbers) for _ in range(n)], held))
 
 
 if __name__ == "__main__":

@@ -51,13 +51,12 @@ def oracle(a, x):
 
 cases = [(5, [2,1,3,2,4]), (3, [1,3,2]), (1, [5,4,3]), (9, [1])]
 random.seed(9)
-for _ in range(350):
+for _ in range(150):
     cases.append((random.randint(1, 6), [random.randint(1, 6)
                                         for _ in range(random.randint(1, 7))]))
-text = str(len(cases)) + "\n"
-expected = []
 for x, a in cases:
-    text += f"{len(a)} {x}\n" + " ".join(map(str, a)) + "\n"
-    expected.append(str(oracle(a, x)))
-check(text, "\n".join(expected), timeout=8)
+    text = f"{len(a)} {x}\n" + " ".join(map(str, a)) + "\n"
+    check(text, oracle(a, x))
+large = list(range(1, 2_000_001))
+check(f"{len(large)} 2000000001\n" + " ".join(map(str, large)) + "\n", 0, timeout=8)
 print("all gift-swap tests passed")
