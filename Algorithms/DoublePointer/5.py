@@ -22,36 +22,37 @@
 # 1 <= s.length <= 1000
 # s consist of only digits and English letters.
 
-# class Solution:
-#     def longestPalindrome(self, s: str) -> str:
-#         if len(s) == 0:
-#             return ""
-#         elif len(s) == 1:
-#             return s
-#         else:
-#             tmp = [] #record every palindrome we found so far
-#             n = len(s)
-#             for i in range(n):
-#                 tmp.append(s[i])
-#                 for j in range(i + 1, n):
-#                     if self.is_Palindrome(s[i:j + 1]):
-#                         tmp.append(s[i:j + 1])
 
-#             #find the longest palindrome
-#             result = tmp[0]
-#             for i in tmp:
-#                 if len(i) > len(result):
-#                     result = i
+#solution1.
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+        ans_left = ans_right = 0
 
-#             return result
+        # 奇回文串
+        for i in range(n):
+            l = r = i
+            while l >= 0 and r < n and s[l] == s[r]:
+                l -= 1
+                r += 1
+            # 循环结束后，s[l+1] 到 s[r-1] 是回文串
+            if r - l - 1 > ans_right - ans_left:
+                ans_left, ans_right = l + 1, r  # 左闭右开区间
 
-#     def is_Palindrome(self, s):
-#         s1 = s[::-1]
-#         if s1 == s:
-#             return True
-#         else:
-#             return False
+        # 偶回文串
+        for i in range(n - 1):
+            l, r = i, i + 1
+            while l >= 0 and r < n and s[l] == s[r]:
+                l -= 1
+                r += 1
+            if r - l - 1 > ans_right - ans_left:
+                ans_left, ans_right = l + 1, r  # 左闭右开区间
 
+        return s[ans_left: ans_right]
+
+
+        
+#solution2.
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         if len(s) <= 1:

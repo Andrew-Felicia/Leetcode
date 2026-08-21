@@ -1,58 +1,23 @@
 import sys
 
-#brute force
-#O(n^3)
-# def main():
 
-#     data = sys.stdin.read().split()
-#     idx = 0
-#     n = int(data[idx])
-#     idx += 1
-#     s = data[idx]
-
-#     def abEqual(start, end):
-#         a, b = 0, 0
-#         for i in s[start:end + 1]:
-#             if i == 'A':
-#                 a += 1
-#             else:
-#                 b += 1
-#         return a == b
-    
-#     best = 0
-#     for i in range(n):
-#         for j in range(i + 1, n):
-#             if abEqual(i, j):
-#                 best = max(best, j - i + 1)
-#     print(best)
-
-
-
-#hash table + prefix sum
-def main():
-    data = sys.stdin.read().split()
-    idx = 0
-    n = int(data[idx])
-    idx += 1
-    s = data[idx]
-
-    best = 0
+def longest_balanced(s):
+    earliest = {0: -1}
     balance = 0
-    prefix = {0:-1}
-    for i, c in enumerate(s):
-        if c == 'A':
-            balance += 1
+    answer = 0
+    for index, character in enumerate(s):
+        balance += 1 if character == "A" else -1
+        if balance in earliest:
+            answer = max(answer, index - earliest[balance])
         else:
-            balance -= 1
-        if balance in prefix:
-            best = max(best, i - prefix[balance])
-        else:
-            prefix[balance] = i
-    print(best)
+            earliest[balance] = index
+    return answer
 
 
-
-
+def main():
+    tokens = sys.stdin.buffer.read().split()
+    n = int(tokens[0])
+    print(longest_balanced(tokens[1].decode()[:n]))
 
 
 if __name__ == "__main__":

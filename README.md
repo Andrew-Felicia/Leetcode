@@ -3,15 +3,17 @@
 
 prefix sum: 209, 238, 560, 713.
 
-hash table
+hash table: 1
 
-dynamic programming
+dynamic programming: 62, 64
 
 greedy
 
-gragh
+gragh: 200, 207, 994, 210, 310
 
 binary search
 
 sorting
+
+
 
