@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 
 
-SOLUTION_FILE = "3.py"
+SOLUTION_FILE = "3sol.py"
 FOLDER = Path(__file__).resolve().parent
 
 
