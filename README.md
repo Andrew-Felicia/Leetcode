@@ -23,3 +23,44 @@ sorting
 
 
 
+
+
+
+
+
+```bash
+/Users/taoyongli/leetcode/.venv/bin/python -m pytest test1.py -v
+```
+
+Alternatively, activate the virtual environment:
+
+```bash
+source /Users/taoyongli/leetcode/.venv/bin/activate
+```
+
+Your terminal prompt should show something like:
+
+```text
+(.venv)
+```
+
+Then use shorter commands:
+
+```bash
+python -m pip install pytest
+python -m pytest test1.py -v
+```
+
+For VS Code:
+
+1. Press `Cmd+Shift+P`.
+2. Select **Python: Select Interpreter**.
+3. Select or enter:
+
+```text
+/Users/taoyongli/leetcode/.venv/bin/python
+```
+
+4. Refresh the Testing panel.
+
+Do not use `--break-system-packages`; the existing virtual environment is the safer solution.
