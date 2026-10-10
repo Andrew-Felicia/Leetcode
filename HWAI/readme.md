@@ -28,7 +28,26 @@ AI算法： K-MEANS聚类， 决策树， 逻辑回归， Transformer.
 	￼	​​选择题刷真题：​​ 选择题重复率高，刷近两年的真题是提分最快的方式，能帮你快速建立信心。
 	￼	​​时间管理是关键：​​ 编程题分值高，务必保证至少1小时的解题时间，不要在选择题上纠结过久。
 
-
+Linear algebra
+Probability and statistics
+Regression and classification
+KNN, K-means and decision trees
+Precision, recall and F1
+CNN and backpropagation
+Optimizers and regularization
+Attention and Transformer
+Quantization and inference optimization
+LLM training, fine-tuning and RAG
 
 
 Debug in newcoder.
+
+
+
+# Round to the nearest integer
+print(round(4.6))    # Output: 5
+print(round(4.2))    # Output: 4
+
+# Round to a specific number of decimal places
+print(round(3.14159, 2))  # Output: 3.14
+
