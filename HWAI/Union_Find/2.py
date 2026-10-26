@@ -1,97 +1,64 @@
 import sys
 
+class Union:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.size = [1] * n
 
-NOISE = -1
-UNVISITED = -2
+    def find(self, x):
+        if self.parent[x] == x:
+            return x
+        self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
 
-def distance(point1, point2):
-    distances = 0.0
-    for p1, p2 in zip(point1, point2):
-        distances += (p1 - p2) ** 2
-    return distances
+    def union(self, a, b):
+        root_a = self.find(a)
+        root_b = self.find(b)
+        if root_a == root_b:
+            return self.size[root_a]
+        if self.size[root_a] < self.size[root_b]:
+            root_a, root_b = root_b, root_a
+        self.parent[root_b] = root_a
+        self.size[root_a] += self.size[root_b]
 
-
-
-def dbscan(eps, min_samples, points):
-    n = len(points)
-    labels = [UNVISITED] * n
-    cluster_count = 0
-    eps_squared = eps * eps
-
-    def find_neighbors(index):
-        neighbors = []
-
-        for neighbor_index in range(n):
-            # if neighbor_index == index:
-            #     continue
-            if distance(points[index], points[neighbor_index]) < eps_squared:
-                neighbors.append(neighbor_index)
-
-        return neighbors
-
-    for index in range(n):
-        #if this point is been processed, then skip.
-        if labels[index] != UNVISITED:
-            continue
-        neighbors = find_neighbors(index)
-
-        if len(neighbors) <= min_samples:
-            labels[index] = NOISE
-            continue
-
-        labels[index] = cluster_count
-
-        queue = neighbors[:]
-        queued = set(queue)
-
-        head = 0
-
-        while head < len(queue):
-            current_index = queue[head]
-            head += 1
-
-            if labels[current_index] == NOISE:
-                labels[current_index] = cluster_count
-
-            if labels[current_index] != UNVISITED:
-                continue
+        return self.size[root_a]
 
 
-            # current_index is either core point or non-core point
-            labels[current_index] = cluster_count
-
-            current_neighbors = find_neighbors(current_index)
-
-            if len(current_neighbors) > min_samples:
-                for neighbor_index in current_neighbors:
-                    if (
-                        labels[neighbor_index] 
-                        in (UNVISITED, NOISE)
-                        and neighbor_index not in queued
-                    ):
-                        queue.append(neighbor_index)
-                        queued.add(neighbor_index)
-
-        cluster_count += 1
-
-    noise_count = sum(
-        1 for node in labels if node == NOISE
-    )
-
-    return cluster_count, noise_count
-                        
 def main():
-    data = sys.stdin.readline
-    eps, min_samples, x = list(data().split())
-    eps = float(eps)
-    min_samples = int(min_samples)
-    x = int(x)
+    input = sys.stdin.readline
+    n = int(input())
+    uf = Union(n)
 
-    points = list(list(map(float, data().split())) for _ in range(x))
+    data = list(list(input().split()) for _ in range(n))
 
-    cluster_count, noise_count = dbscan(eps, min_samples, points)
+    #print(n, data)
 
-    print(cluster_count, noise_count)
+    row_recorder = {}  # number : row index
+
+    for row in range(n):
+        for i in data[row]:
+            if i in row_recorder:
+                uf.union(row, row_recorder[i])
+            else:
+                row_recorder[i] = row
+
+    merged = {}
+
+    for i, v in enumerate(data):
+        root = uf.find(i)
+        if root not in merged:
+            merged[root] = set()
+        merged[root].update(v)
+
+    result = [sorted(i) for i in merged.values()]
+
+    result.sort()
+
+
+    for i in result:
+        print(*i)
+
+
 
 
 
