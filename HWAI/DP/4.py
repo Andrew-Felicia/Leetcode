@@ -50,7 +50,7 @@ def find_words(text, start, root):
 
 def main():
     data = sys.stdin.readline
-    text = data()
+    text = data().strip()
     n = int(data())
 
     scores = {}
@@ -71,7 +71,7 @@ def main():
 
     #dp[position] = {last_words:best_score}
     dp = [{} for _ in range(text_length + 1)]
-    dp[0] = None
+    dp[0][None] = 0
 
     for start in range(text_length + 1):
         if not dp[start]:

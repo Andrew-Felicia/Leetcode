@@ -89,6 +89,22 @@ def run_solution(test_input, monkeypatch, capsys):
 7
 8""",
         ),
+
+
+        (
+            """\
+5
+1 2 3
+4 5
+11 22
+33 44 55 1
+3 66
+""",
+            """\
+1 2 3 33 44 55 66
+11 22
+4 5""",
+        ),
     ],
 )
 def test_entity_merge(test_input, expected, monkeypatch, capsys):
