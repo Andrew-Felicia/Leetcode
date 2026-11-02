@@ -28,6 +28,7 @@
 
 
 from typing import List
+from typing import Optional
 
 # Definition for singly-linked list.
 class ListNode:
@@ -51,8 +52,10 @@ class ListNode:
 #             return reversedList
 
 #iterative version
+#TC: O(n)
+#SC: O(n)
 class Solution:
-    def reverseList(self, head):
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if not head or not head.next:
             return head
 
@@ -68,3 +71,18 @@ class Solution:
             tmp.next = ListNode(i)
             tmp = tmp.next
         return ans.next
+
+#TC: O(n)
+#SC: O(1)
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        pre = None
+        cur = head
+        while cur:
+            nxt = cur.next
+            cur.next = pre  # 把 cur 插在 pre 链表的前面（头插法）
+            pre = cur
+            cur = nxt
+        return pre
+
+    
